@@ -1,0 +1,187 @@
+
+void arrSelectSort(int *arr[], int size)
+{
+    int startScan, minIndex;
+    int *minELem;
+
+    for (startScan = 0 ; startScan < (size-1); startScan++)
+    {
+        minIndex = startScan;
+        minELem = arr[startScan];
+        for (int index = startScan + 1; index < size; index++)
+        {
+            if (*(arr[index]) < *minELem)
+            {
+                minELem = arr[index];
+                minIndex = index;
+            }
+        }
+        arr[minIndex] = arr[startScan];
+        arr[startScan] = minELem;
+    }
+}
+
+void showArray(const int arr[], int size)
+{
+    for (int count = 0; count < size; count++)
+        cout << arr[count] << " ";
+    cout << endl;
+}
+
+void showArrPtr(int *arr[], int size)
+{
+    for (int count = 0; count < size; count++)
+        cout << *(arr[count]) << " ";
+    cout << endl;
+}
+
+int *arrayAllocator(int numElement)
+{
+    // first check if argument is 0 or negative
+    if (numElement <= 0)
+        // in this case return a null pointer
+        return nullptr;
+
+    // otherwise, dynamically allocate memory
+    // for an array of specified size
+    int *ptr = new int [numElement];
+    
+    // return the created pointer
+    return ptr;
+}
+
+void sortArray(double *ptr, string *namesPtr, int arraySize)
+{
+    // temporary variable to help in swapping
+    double temp;
+    string tempName;
+
+    // boolean variable that will control when
+    // array is done sorting
+    bool swapped = true;
+
+    while(swapped)
+    {
+        swapped = false;
+
+        // loop on all elements
+        for (int counter = 0; counter < arraySize - 1; counter++)
+        {
+            // check if following element is greater
+            // than current element
+            if (*(ptr+counter) > *(ptr+counter+1))
+            {
+                // if so, perform swap
+                temp = *(ptr+counter+1);
+                tempName = *(namesPtr+counter+1);
+
+                *(ptr+counter+1) = *(ptr+counter);
+                *(namesPtr+counter+1) = *(namesPtr+counter);
+
+                *(ptr+counter) = temp;
+                *(namesPtr+counter) = tempName;
+
+                // and update boolean variable
+                swapped = true;
+            }   // if ends here
+        }   // for loop ends here
+    }   // while loop ends here
+}
+
+double getAverage(double *ptr, int arraySize)
+{
+    // accumulator variable
+    double total = 0.0;
+
+    // loop on all values of array, except from
+    // first one
+    for (int counter = 0; counter < arraySize; counter++)
+    {
+        total += *(ptr + counter);
+    }
+
+    return (double)total/arraySize;
+}
+
+int getMode(int *arr, int numElements)
+{
+    // keep track of highest number of apperances
+    // the index, and the mode
+    int maxAppearances = 0, appearances;
+    int *mode;
+
+    for (int i =0; i < numElements; i++)
+    {
+        // first reset number of appearances to 0
+        appearances = 0;
+
+        // loop on all elements, to count all appearances
+        // of i-th element from its index until end
+        for (int j = i; j < numElements; j++)
+        {
+            if(*(arr+i) == *(arr+j))
+                appearances++;
+        }
+
+        // after counting total number of appearances for 
+        // the i-th elemnet, update mode if necessary
+        if (appearances > maxAppearances)
+        {
+            maxAppearances = appearances;
+            mode = arr + i;
+        }
+    }
+
+    // if maximum numer of appearances is 1
+    // there is no mode, return -1
+    if (maxAppearances == 1)
+        return -1;
+
+    // otherwise, return the mode
+    return *mode;
+}
+
+
+// Function should create a copy of array, except that the element values
+// should be reversed in the copy.
+int *reverseArray(int *arr, int SIZE)
+{
+    // dynamically allocate a new array
+    int *ptr = new int[SIZE];
+
+    // save values from original array
+    // into reverse order.
+    for (int i = 0; i < SIZE; i++)
+    {
+        // ptr + SIZE -1 - i will be the last element of new array
+        *(ptr + SIZE - 1 - i) = *(arr + i);
+    }
+
+    return ptr;
+}
+
+// Function should create a new array that is twice the size
+// of the argument array. Function copy the contents of the argument
+// array to the new array and initialize the unused elements of
+// the second array with 0.
+int *expandArray(int *arr, int SIZE)
+{
+    // dynamically allocate an array twice the size
+    int *expPtr = new int[2*SIZE];
+
+    // initialize elements of new array
+    for (int i = 0; i < 2 *SIZE; i++)
+    {
+        // first add elements of old array
+        if (i < SIZE)
+        {
+            *(expPtr + i) = *(arr + i);
+        }
+        // all next elements should be 0
+        else
+        {
+            *(expPtr + i) = 0;
+        }
+    }
+    return expPtr;
+}
